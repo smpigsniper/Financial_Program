@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_financial/Screen/login_page.dart';
+import 'package:flutter_financial/blocs/login/login_blocs.dart';
+
+import 'Repositories/LoginResponse.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final LoginBloc _loginBloc = LoginBloc(LoginResponse());
 
   // This widget is the root of your application.
   @override
@@ -24,7 +30,11 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: BlocProvider<LoginBloc>.value(
+        value: _loginBloc,
+        child: const LoginPage(),
+      ),
+      //const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
