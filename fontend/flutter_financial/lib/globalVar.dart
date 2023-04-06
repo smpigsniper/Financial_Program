@@ -1,3 +1,3 @@
 class GlobalVar {
-  static String apiIp = '127.0.0.1:8081';
+  static String apiIp = 'http://127.0.0.1:8081/';
 }

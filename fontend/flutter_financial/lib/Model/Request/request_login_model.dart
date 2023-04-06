@@ -1,6 +1,6 @@
 class RequestLoginModel {
-  final String username;
-  final String password;
+  late final String username;
+  late final String password;
 
   RequestLoginModel({
     required this.username,

@@ -12,8 +12,8 @@ abstract class LoginRepository {
 class LoginResponse extends LoginRepository {
   @override
   Future<ResponseLoginModel> loginData(RequestLoginModel requestData) async {
-    return ResponseLoginModel.fromJson(jsonDecode(
-        APIRequest.postRequest(GlobalVar.apiIp, "", requestData.toJson())
-            as String));
+    String responseData = await APIRequest.postRequest(
+        "${GlobalVar.apiIp}register", "", requestData.toJson());
+    return ResponseLoginModel.fromJson(jsonDecode(responseData));
   }
 }

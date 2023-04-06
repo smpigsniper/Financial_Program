@@ -13,9 +13,9 @@ class ResponseLoginModel {
 
   ResponseLoginModel.fromJson(Map<String, dynamic> json)
       : status = json['status'] as int,
-        reason = json['reason'],
-        username = json['username'],
-        accessToken = json['accessToken'];
+        reason = json['reason'] ?? '',
+        username = json['username'] ?? '',
+        accessToken = json['accessToken'] ?? '';
 
   Map<String, dynamic> toJson() => {
         'status': status,
