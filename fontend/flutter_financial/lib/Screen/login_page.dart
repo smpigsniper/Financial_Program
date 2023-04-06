@@ -68,6 +68,9 @@ class _LoginPageState extends State<LoginPage> {
         height: 30,
       ),
       (reason == "") ? Container() : _responseReason(reason),
+      const SizedBox(
+        height: 10,
+      ),
       (loading)
           ? const CircularProgressIndicator()
           : CustElevatedButton(

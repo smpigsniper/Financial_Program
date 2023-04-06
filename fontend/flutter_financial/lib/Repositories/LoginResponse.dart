@@ -13,7 +13,7 @@ class LoginResponse extends LoginRepository {
   @override
   Future<ResponseLoginModel> loginData(RequestLoginModel requestData) async {
     String responseData = await APIRequest.postRequest(
-        "${GlobalVar.apiIp}register", "", requestData.toJson());
+        "${GlobalVar.apiIp}login", "", requestData.toJson());
     return ResponseLoginModel.fromJson(jsonDecode(responseData));
   }
 }
