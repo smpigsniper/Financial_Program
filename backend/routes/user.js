@@ -12,10 +12,10 @@ exports.register = async function (req, res, next) {
     var values = [req.body.username, password]
     connection.query(sql, values, (err, result, fields) => {
         if (err) {
-            res.json({ "status": 0, "reason": err.message, "data": {} })
+            res.json({ "status": 0, "reason": err.message })
             return
         }
-        res.json({ "status": 1, "reason": "", "data": {} })
+        res.json({ "status": 1, "reason": "" })
     });
     connection.end();
 }
@@ -27,14 +27,20 @@ exports.login = async function (req, res, next) {
     (async () => {
         try {
             const rows = await query(sql);
-            if (await encrypted.comparePassword(req.body.password, rows[0].password)) {
-                let data = {
-                    username: req.body.username,
-                    date: Date()
+            if (rows.length > 0) {
+                if (await encrypted.comparePassword(req.body.password, rows[0].password)) {
+                    let data = {
+                        username: req.body.username,
+                        date: Date()
+                    }
+                    let token = jwt.generateAccessToken(data);
+                    res.json({ "status": 1, "reason": "", "username": req.body.username, "accessToken": token })
+                    return;
                 }
-                let token = jwt.generateAccessToken(data);
-                res.json({ "status": 1, "reason": "", "username": req.body.username, "accessToken": token })
-                return;
+                else {
+                    res.json({ "status": 0, "reason": "Login Fail", "username": "", "accessToken": "" });
+                    return;
+                }
             }
             else {
                 res.json({ "status": 0, "reason": "Login Fail", "username": "", "accessToken": "" });
