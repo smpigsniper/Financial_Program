@@ -14,6 +14,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         responseData = await data.registerData(event.data);
         emit(RegisterLoaded(responseData));
       }
+      emit(RegisterInit());
     });
   }
 }

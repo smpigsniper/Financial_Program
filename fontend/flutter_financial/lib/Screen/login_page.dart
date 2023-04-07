@@ -1,11 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_financial/Model/Request/request_login_model.dart';
+import 'package:flutter_financial/Repositories/RegisterResponse.dart';
+import 'package:flutter_financial/Screen/register_page.dart';
 import 'package:flutter_financial/Widget/custElevatedButton.dart';
+import 'package:flutter_financial/Widget/custTextButton.dart';
 import 'package:flutter_financial/Widget/custTextField.dart';
 import 'package:flutter_financial/blocs/login/login_blocs.dart';
 import 'package:flutter_financial/blocs/login/login_events.dart';
 import 'package:flutter_financial/blocs/login/login_states.dart';
+import 'package:flutter_financial/blocs/register/register_blocs.dart';
+import 'package:flutter_financial/color.dart';
+import 'package:flutter_financial/fontSize.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -24,6 +31,9 @@ class _LoginPageState extends State<LoginPage> {
     FocusNode(),
     FocusNode(),
   ];
+  final CustColors _custColors = CustColors();
+  final CustFontSize _custFontSize = CustFontSize();
+  final RegisterBloc _registerBloc = RegisterBloc(RegisterResponse());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,13 +41,13 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) {},
       builder: (context, state) {
         if (state is LoginLoading) {
-          return _loadingPage(true);
+          return _initLoginPage(true);
         }
 
         if (state is LoginLoaded) {
           if (state.data.status == 1) {
             return _loginSuccess();
-          } else {
+          } else if (state.data.status == 0) {
             return _initLoginPage(false, reason: state.data.reason);
           }
         }
@@ -51,10 +61,6 @@ class _LoginPageState extends State<LoginPage> {
     return Container();
   }
 
-  Widget _loadingPage(bool loading) {
-    return _initLoginPage(true);
-  }
-
   List<Widget> _mainField(bool loading, {String reason = ""}) {
     return [
       _editTextField(_textEditingControllerList[0], _focusNodeList[0],
@@ -65,7 +71,16 @@ class _LoginPageState extends State<LoginPage> {
       _editTextField(_textEditingControllerList[1], _focusNodeList[1],
           "Password", Icons.key, true),
       const SizedBox(
-        height: 30,
+        height: 20,
+      ),
+      CustTextButton(
+        onPressed: _registerButtonPress,
+        textColor: _custColors.primaryColor[0],
+        text: 'Register',
+        fontSize: _custFontSize.primaryFontSize[3],
+      ),
+      const SizedBox(
+        height: 10,
       ),
       (reason == "") ? Container() : _responseReason(reason),
       const SizedBox(
@@ -103,11 +118,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // CustElevatedButton(
-  //           text: "Login",
-  //           onPressed: () {},
-  //         ),
-
   Widget _editTextField(TextEditingController controller, FocusNode focusNode,
       String name, IconData iconData, bool isPassword) {
     return CustTextField(
@@ -121,5 +131,16 @@ class _LoginPageState extends State<LoginPage> {
 
   void _loginButtonPress(RequestLoginModel data) {
     BlocProvider.of<LoginBloc>(context).add(Login(data));
+  }
+
+  void _registerButtonPress() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+          value: _registerBloc,
+          child: const RegisterPage(),
+        ),
+      ),
+    );
   }
 }

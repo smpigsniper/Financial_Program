@@ -8,6 +8,7 @@ class CustTextField extends StatefulWidget {
   final Function(String)? onChange;
   final FocusNode? focusNode;
   final bool? hideText;
+  final String? errorText;
   const CustTextField(
       {Key? key,
       required this.text,
@@ -15,7 +16,8 @@ class CustTextField extends StatefulWidget {
       this.controller,
       this.onChange,
       this.focusNode,
-      this.hideText})
+      this.hideText,
+      this.errorText})
       : super(key: key);
 
   @override
@@ -36,6 +38,7 @@ class _CustTextFieldState extends State<CustTextField> {
         labelText: widget.text,
         prefixIcon: (widget.iconData != null) ? Icon(widget.iconData) : null,
         border: const OutlineInputBorder(),
+        errorText: widget.errorText,
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: _custColors.primaryColor[0],

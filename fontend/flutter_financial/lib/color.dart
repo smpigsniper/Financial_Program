@@ -6,19 +6,19 @@ class CustColors {
   ];
 
   List<Color> secondaryColor = [
-    const Color(0x0030c5db),
+    const Color(0xFF30C4DB),
   ];
 
   List<Color> tertiaryColor = [
-    const Color(0x0041f2cf),
+    const Color(0xFF41F2CF),
   ];
 
   List<Color> quaternaryColor = [
-    const Color(0x0030db7f),
+    const Color(0xFF30DB80),
   ];
 
   List<Color> proteinColor = [
-    const Color(0x0038ff4f),
+    const Color(0xFF38FF4F),
   ];
 
   List<Color> textColor = [

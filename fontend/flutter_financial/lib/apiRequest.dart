@@ -10,8 +10,8 @@ class APIRequest {
         response = responseData.body;
       }
       return response;
-    } on Exception catch (_, ex) {
-      throw (ex);
+    } on Exception catch (_) {
+      return response;
     }
   }
 
@@ -25,8 +25,8 @@ class APIRequest {
         response = responseData.body;
       }
       return response;
-    } on Exception catch (_, ex) {
-      throw (ex);
+    } on Exception catch (_) {
+      return response;
     }
   }
 
