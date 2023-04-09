@@ -25,7 +25,7 @@ class APIRequest {
         response = responseData.body;
       }
       return response;
-    } on Exception catch (_) {
+    } on Exception catch (_, ex) {
       return response;
     }
   }
