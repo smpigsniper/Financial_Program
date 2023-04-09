@@ -56,3 +56,15 @@ exports.login = async function (req, res, next) {
         }
     })()
 }
+
+exports.refreshToken = async function (req, res, next) {
+    try {
+        const token = jwt.generateRefreshToken(req.body.username);
+        res.json({ "status": 1, "reason": "", "username": req.body.username, "accessToken": token })
+        return;
+    }
+    catch (error) {
+        res.json({ "status": 0, "reason": error.message, "username": req.body.username, "accessToken": "" })
+        return;
+    }
+}
